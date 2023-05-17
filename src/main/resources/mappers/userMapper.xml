@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.ssafy.fit.model.dao.IUserDao">
+
+	<!--유저 조회-->
+	<select id="selectUserAll" resultType="User">
+		SELECT * FROM user;
+	</select>
+
+	<!--유저아아디로 유저 조회-->
+	<select id="selectUserByUserId" parameterType="String"	resultType="User">
+		SELECT * FROM user WHERE userId = #{userId}
+	</select>
+
+	<!--유저아이디로 유저 닉네임 조회-->
+	<select id="getNickNameByUserId" parameterType="String"	resultType="String">
+		SELECT nickName FROM user WHERE userId = #{userId}
+	</select>
+
+	<!--유저 추가-->
+	<insert id="insertUser" parameterType="User">
+	INSERT INTO user (userId, password, nickName, userName, email)
+	 VALUES (#{userId},	#{password}, #{nickName}, #{userName}, #{email})
+	</insert>
+
+	<!--찜리스트 추가-->
+	<insert id="likeVideo" parameterType="map">
+		INSERT INTO likelist (userId, videoNo) 
+		VALUES (#{userId}, #{videoNo})
+	</insert>
+
+	<!--찜리스트 삭제-->
+	<delete id="unLikeVideo" parameterType="map">
+		DELETE FROM likelist WHERE userId = #{userId} AND videoNo = #{videoNo}
+	</delete>
+
+	<!--비디오의 찜리스트 조회-->
+	<select id="selectLikeVideoNumbers" parameterType="String" resultType="Integer">
+	SELECT videoNo FROM likelist WHERE userId = #{userId}
+	</select>
+
+	<!--팔로워 조회-->
+	<select id="myFollower" parameterType="int" resultType="Integer">
+		SELECT followFrom From follow WHERE followTo = #{userNo}
+	</select>
+
+	<!--팔로잉 조회-->
+	<select id="myFollowing" parameterType="int" resultType="Integer">
+		SELECT followTo From follow WHERE followFrom = #{userNo}
+	</select>
+
+	<!--팔로우 추가 -->
+	<insert id="follow" parameterType="int">
+		INSERT INTO follow (followFrom, followTo)
+		VALUES (#{from}, #{to})
+	</insert>
+
+	<!--팔로우 삭제 -->
+	<delete id="unFollow" parameterType="int">
+		DELETE FROM follow
+		WHERE followFrom = #{from} AND followTo = #{to}
+	</delete>
+</mapper>
