@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS article;
 DROP TABLE IF EXISTS follow;
+DROP TABLE IF EXISTS likeArticle;
 
 CREATE TABLE video (
 	no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -37,7 +38,6 @@ CREATE TABLE article (
     img varchar(100) NOT NULL,
     created_at datetime default now(),
     updated_at datetime default now(),
-    likecnt int default 0,
     viewcnt int default 0
 )ENGINE=InnoDB;
 
@@ -57,7 +57,10 @@ CREATE TABLE follow (
     followTo int NOT NUll
 )ENGINE=InnoDB;
 
-
+CREATE TABLE likeArticle (
+    ArticleNo int NOT NUll,
+    UserNo int NOT NUll
+)ENGINE=InnoDB;
 
 
 
@@ -80,6 +83,7 @@ VALUES
 ('jeongssafy', 1357, '정싸피', 'jdd@ssafy.com', 'M', 27);
 
 
+
 INSERT INTO article (userNo, content, img, created_at, updated_at, likecnt, viewcnt)
 VALUES
 (1, '첫번째 내용입니다','/dog1.jpg', now(), now(), 0, 0),
@@ -96,5 +100,17 @@ INSERT INTO follow (followFrom, followTo)
 VALUES
 ('1', '2'),
 ('2', '1');
+
+INSERT INTO likeArticle (ArticleNo, UserNo)
+VALUES
+('1', '1'),
+('1', '2'),
+('2', '1'),
+('2', '2');
+
+SELECT
+	(SELECT count(*) FROM likeArticle WHERE articleNo = 1) as likecnt
+FROM article as atc
+WHERE userNo = 1;
 
 commit;
