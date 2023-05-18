@@ -18,5 +18,5 @@ public interface ArticleService {
     public void deleteArticle(int articleNo);
 
     public void updateArticle(int articleNo, Article article);
-
+    
 }

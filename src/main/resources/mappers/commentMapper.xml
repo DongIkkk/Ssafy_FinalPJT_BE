@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.fit.model.dao.ICommentDao">
+	<mapper namespace="com.ssafy.fit.model.dao.ICommentDao">
 	
 	 <!-- 댓글 전체 조회 -->
 	
@@ -32,9 +32,8 @@
         SET content = #{content}, updated_at = now()
         WHERE commentNo = #{commentNo};
     </update>
-	
-	
-	
+	</mapper>
+
 <!-- 리뷰 전체 조회
     <select id="selectVideoReviewAll" parameterType="int" resultType="VideoReview">
         SELECT * FROM videoreview WHERE videoNo = #{videoNo};
@@ -69,4 +68,3 @@
         SET viewCount = viewCount + 1
         WHERE reviewNo = #{reviewNo};
     </update> -->
-</mapper>
