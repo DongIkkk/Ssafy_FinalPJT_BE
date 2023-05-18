@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.fit.model.dao.IVideoReviewDao">
+<mapper namespace="com.ssafy.fit.model.dao.ICommentDao">
 
     <!-- 리뷰 전체 조회 -->
     <select id="selectVideoReviewAll" parameterType="int" resultType="VideoReview">
