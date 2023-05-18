@@ -1,6 +1,7 @@
 package com.ssafy.fit.model.service;
 
 import com.ssafy.fit.model.dao.IArticleDao;
+
 import com.ssafy.fit.model.dto.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

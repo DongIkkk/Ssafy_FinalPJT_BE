@@ -26,19 +26,19 @@ CREATE TABLE comment (
     articleNo int NOT NULL,
 	userNo int NOT NULL,
     content varchar(200) NOT NULL,
-	created_at date NOT NULL,
-    updated_at date NOT NULL
+	created_at DATETIME DEFAULT now(),
+    updated_at DATETIME DEFAULT now()
 )ENGINE=InnoDB;
 
 CREATE TABLE article (
-	articleNo int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	userNo int NOT NULL,
+    articleNo int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userNo int NOT NULL,
     content varchar(200) NOT NULL,
     img varchar(100) NOT NULL,
-	created_at date NOT NULL,
-    updated_at date NOT NULL,
-    likecnt int NOT NULL,
-    viewcnt int NOT NULL
+    created_at datetime default now(),
+    updated_at datetime default now(),
+    likecnt int default 0,
+    viewcnt int default 0
 )ENGINE=InnoDB;
 
 CREATE TABLE user (
