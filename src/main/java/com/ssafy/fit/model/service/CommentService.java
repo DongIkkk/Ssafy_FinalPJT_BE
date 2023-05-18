@@ -9,11 +9,11 @@ public interface CommentService {
 	public List<Comment> selectCommentAll(int articleNo);
 
 	//없앨예정
-	public Comment selectCommentByNo(int no);
+	public Comment selectCommentByNo(int commentNo);
 
 	public void insertComment(Comment comment);
 
-	public void deleteComment(int no);
+	public void deleteComment(int commentNo);
 
 	public void updateComment(int commentNo, String content);
 

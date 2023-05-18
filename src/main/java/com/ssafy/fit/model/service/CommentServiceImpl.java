@@ -17,32 +17,32 @@ public class CommentServiceImpl implements CommentService {
         this.commentDao = commentDao;
     }
 
-    // 리뷰 전체 조회
+    // 댓글 전체 조회
     @Override
     public List<Comment> selectCommentAll(int articleNo) {
         return commentDao.selectCommentAll(articleNo);
     }
 
     // 없앨예정
-    // 리뷰 상세 조회
+    // 댓글 상세 조회
     @Override
-    public Comment selectCommentByNo(int no) {
-        return commentDao.selectCommentByNo(no);
+    public Comment selectCommentByNo(int commentNo) {
+        return commentDao.selectCommentByNo(commentNo);
     }
 
-    // 리뷰 작성
+    // 댓글 작성
     @Override
     public void insertComment(Comment comment) {
         commentDao.insertComment(comment);
     }
 
-    // 리뷰 삭제
+    // 댓글 삭제
     @Override
-    public void deleteComment(int no) {
-        commentDao.deleteComment(no);
+    public void deleteComment(int commentNo) {
+        commentDao.deleteComment(commentNo);
     }
 
-    // 리뷰 수정
+    // 댓글 수정
     @Override
     public void updateComment(int commentNo, String content) {
         commentDao.updateComment(commentNo, content);
