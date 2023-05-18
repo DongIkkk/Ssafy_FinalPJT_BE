@@ -31,7 +31,7 @@
         UPDATE comment
         SET content = #{content}, updated_at = now()
         WHERE commentNo = #{commentNo};
-    </update> -->
+    </update>
 	
 	
 	
