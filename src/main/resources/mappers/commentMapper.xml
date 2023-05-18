@@ -3,39 +3,70 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.fit.model.dao.ICommentDao">
-
-    <!-- 리뷰 전체 조회 -->
+	
+	 <!-- 댓글 전체 조회 -->
+	
+	<select id="selectCommentAll" parameterType="int" resultType="Comment">
+        SELECT * FROM comment WHERE articleNo = #{articleNo};
+    </select>
+	 
+	 <!-- 댓글 상세 조회 -->
+	<select id="selectCommentByNo" parameterType="int" resultType="Comment">
+        SELECT * FROM comment WHERE commentNo = #{commentNo};
+    </select>
+	 
+	 <!-- 댓글 작성 -->
+	<insert id="insertComment" parameterType="Comment">
+        INSERT INTO comment (commentNo, articleNo, userNo, content, created_at)
+        VALUES (#{commentNo}, #{articleNo}, #{userNo}, #{content}, now());
+    </insert>
+	 
+	 <!-- 댓글 삭제 -->
+	 <delete id="deleteComment" parameterType="int">
+        DELETE FROM comment WHERE commentNo = #{commentNo};
+    </delete>
+	 
+	 <!-- 댓글 수정 -->
+	 <update id="updateComment" parameterType="map">
+        UPDATE comment
+        SET content = #{content}, updated_at = now()
+        WHERE commentNo = #{commentNo};
+    </update> -->
+	
+	
+	
+<!-- 리뷰 전체 조회
     <select id="selectVideoReviewAll" parameterType="int" resultType="VideoReview">
         SELECT * FROM videoreview WHERE videoNo = #{videoNo};
     </select>
 
-    <!-- 리뷰 상세 조회 -->
+    리뷰 상세 조회
     <select id="selectVideoReviewByNo" parameterType="int" resultType="VideoReview">
         SELECT * FROM videoreview WHERE reviewNo = #{no};
     </select>
 
-    <!-- 리뷰 작성 -->
+    리뷰 작성
     <insert id="insertVideoReview" parameterType="VideoReview">
         INSERT INTO videoreview (videoNo, nickName, title, content, lastUpdate)
         VALUES (#{videoNo}, #{nickName}, #{title}, #{content}, now());
-    </insert>
+    </insert> -->
 
-    <!-- 리뷰 삭제 -->
+<!--     리뷰 삭제
     <delete id="deleteVideoReview" parameterType="int">
         DELETE FROM videoreview WHERE reviewNo = #{no};
     </delete>
 
-    <!-- 리뷰 수정 -->
+    리뷰 수정
     <update id="updateVideoReview" parameterType="map">
         UPDATE videoreview
         SET title = #{title}, content = #{content}
         WHERE reviewNo = #{reviewNo};
-    </update>
-
-    <!-- 조회수 증가 -->
+    </update> -->
+<!-- 
+    조회수 증가
     <update id="updateViewCount" parameterType="map">
         UPDATE videoreview
         SET viewCount = viewCount + 1
         WHERE reviewNo = #{reviewNo};
-    </update>
+    </update> -->
 </mapper>
