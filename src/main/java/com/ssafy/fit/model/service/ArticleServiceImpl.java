@@ -30,11 +30,13 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Article selectArticleByNo(int articleNo){
-        // 조회수 증가 메서드 들어가야함
+    	//조회수증가
+    	articleDao.increaseViewCnt(articleNo);
         return articleDao.selectArticleByNo(articleNo);
     }
 
-    @Override
+
+	@Override
     public void insertArticle(Article article) {
         articleDao.insertArticle(article);
     }
@@ -48,4 +50,8 @@ public class ArticleServiceImpl implements ArticleService{
     public void updateArticle(int articleNo, Article article) {
         articleDao.updateArticle(articleNo, article);
     }
+
+    // 조회수 증가 메서드
+  
+    
 }

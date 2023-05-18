@@ -17,5 +17,7 @@ public interface IArticleDao {
     public void deleteArticle(int articleNo);
 
     public void updateArticle(int articleNo, Article article);
+    
+    public void increaseViewCnt(int articleNo);
 
 }
