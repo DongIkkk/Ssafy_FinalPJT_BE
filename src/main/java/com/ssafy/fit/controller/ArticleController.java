@@ -27,7 +27,7 @@ public class ArticleController {
 
     //게시글 상세 조회
     @GetMapping("/article/{articleNo}")
-    public ResponseEntity<?> selectArticle(@RequestParam int articleNo){
+    public ResponseEntity<?> selectArticle(@PathVariable int articleNo){
         Article thisAtc = articleService.selectArticleByNo(articleNo);
         return new ResponseEntity<Article>(thisAtc, HttpStatus.OK);
     }
@@ -35,8 +35,10 @@ public class ArticleController {
 
     //내가 쓴 게시글 조회
     @GetMapping("/articles/{userNo}")
-    public ResponseEntity<?> selectMyArticles(@RequestParam int userNo){
+    public ResponseEntity<?> selectMyArticles(@PathVariable int userNo){
+    	System.out.println("여기");
         List<Article> myAtcs = articleService.selectMyArticle(userNo);
+        System.out.println("여기2");
         return new ResponseEntity<List<Article>>(myAtcs, HttpStatus.OK);
     }
 
@@ -49,14 +51,14 @@ public class ArticleController {
 
     //게시글 수정
     @PutMapping("/article/{articleNo}")
-    public ResponseEntity<?> updateArticle(@RequestParam int articleNo, @RequestBody Article article){
+    public ResponseEntity<?> updateArticle(@PathVariable int articleNo, @RequestBody Article article){
         articleService.updateArticle(articleNo, article);
         return new ResponseEntity<String>("Update Complete!", HttpStatus.OK);
     }
 
     //게시글 삭제
     @DeleteMapping("/article/{articleNo}")
-    public ResponseEntity<?> deleteArticle(@RequestParam int articleNo){
+    public ResponseEntity<?> deleteArticle(@PathVariable int articleNo){
         articleService.deleteArticle(articleNo);
         return new ResponseEntity<String>("delete Complete!", HttpStatus.OK);
     }
