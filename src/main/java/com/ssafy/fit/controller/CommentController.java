@@ -20,7 +20,7 @@ public class CommentController {
 
     // 댓글 조회
     @GetMapping("/{articleNo}/comment")
-    public ResponseEntity<?> allComments(@RequestParam int articleNo){
+    public ResponseEntity<?> allComments(@PathVariable int articleNo){
         List<Comment> commentList = commentService.selectCommentAll(articleNo);
         return new ResponseEntity<List<Comment>>(commentList, HttpStatus.OK);
     }
@@ -36,7 +36,7 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/{articleNo}/comment")
-    public ResponseEntity<String> insertComment(@RequestParam int articleNo, Comment comment){
+    public ResponseEntity<String> insertComment(@PathVariable int articleNo, Comment comment){
         comment.setArticleNo(articleNo);
         commentService.insertComment(comment);
         return new ResponseEntity<String>("Insert Complete !", HttpStatus.CREATED);
@@ -44,14 +44,14 @@ public class CommentController {
 
     // 리뷰 삭제
     @DeleteMapping("/comment/{commentNo}")
-    public ResponseEntity<String> deleteComment(@RequestParam int commentNo){
+    public ResponseEntity<String> deleteComment(@PathVariable int commentNo){
         commentService.deleteComment(commentNo);
         return new ResponseEntity<String>("Delete Complete!", HttpStatus.OK);
     }
 
     // 리뷰 수정
     @PutMapping("/comment/{commentNo}")
-    public ResponseEntity<String> updateComment(@RequestParam int commentNo, Comment comment){
+    public ResponseEntity<String> updateComment(@PathVariable int commentNo, Comment comment){
         commentService.updateComment(commentNo, comment.getContent());
         return new ResponseEntity<String>("Update Complete!",HttpStatus.OK);
     }
