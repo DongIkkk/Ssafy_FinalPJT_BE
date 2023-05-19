@@ -45,19 +45,13 @@ public class UserController {
 
 		if (correctPW) {
 			try {
-				if (user.getUserId() != null || user.getUserId().length() > 0) {
-					result.put("access-token", jwtUtil.createToken("id", user.getUserId()));
-					result.put("message", "SUCCESS");
-					status = HttpStatus.ACCEPTED;
-				} else {
-					result.put("message", "FAIL");
-					status = HttpStatus.NO_CONTENT;
-				}
+				result.put("access-token", jwtUtil.createToken("id", user.getUserId()));
+				result.put("message", "SUCCESS");
+				status = HttpStatus.ACCEPTED;
 			} catch (UnsupportedEncodingException e) {
 				result.put("message", "FAIL");
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
-
 		}
 		else{
 			result.put("message", "Your password is NOT CORRECT");
