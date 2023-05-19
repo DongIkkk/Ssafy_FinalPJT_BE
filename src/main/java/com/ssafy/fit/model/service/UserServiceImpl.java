@@ -25,17 +25,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectUserByUserId(userId);
 	}
 
-	// 회원가입 시 패스워드 체크
-	public boolean isPassword(String userId, String password) {
-		User user = selectUserByUserId(userId);
-
-		if (user != null && user.getPassword().equals(password)) {
-			return true;
-		}
-		return false;
-	}
-
-
 	// 아이디 중복 체크
 	@Override
 	public boolean isDuplicate(String userId) {
@@ -49,10 +38,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 아이디로 닉네임 가져오기
-	@Override
-	public String getNickNameByUserId(String userId) {
-		return userDao.getNickNameByUserId(userId);
-	}
+//	@Override
+//	public String getNickNameByUserId(String userId) {
+//		return userDao.getNickNameByUserId(userId);
+//	}
 
 	// 유저 추가
 	@Override
@@ -61,28 +50,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 비디오 찜 추가
-	@Override
-	public void likeVideo(String userId, int videoNo) {
-		userDao.likeVideo(userId, videoNo);
-	}
-
-	// 비디오 찜 삭제
-	@Override
-	public void unLikeVideo(String userId, int videoNo) {
-		userDao.unLikeVideo(userId, videoNo);
-	}
-
-	// 비디오 번호로 비디오 조회
-	@Override
-	public List<Integer> selectLikeVideoNumbers(String userId) {
-		return userDao.selectLikeVideoNumbers(userId);
-	}
-
-	//유저 아이디로 유저 가져오기
-	@Override
-	public int getUserNoByUserId(String userId) {
-		return userDao.getUserNoByUserId(userId);
-	}
+//	@Override
+//	public void likeVideo(String userId, int videoNo) {
+//		userDao.likeVideo(userId, videoNo);
+//	}
+//
+//	// 비디오 찜 삭제
+//	@Override
+//	public void unLikeVideo(String userId, int videoNo) {
+//		userDao.unLikeVideo(userId, videoNo);
+//	}
+//
+//	// 비디오 번호로 비디오 조회
+//	@Override
+//	public List<Integer> selectLikeVideoNumbers(String userId) {
+//		return userDao.selectLikeVideoNumbers(userId);
+//	}
+//
+//	//유저 아이디로 유저 가져오기
+//	@Override
+//	public int getUserNoByUserId(String userId) {
+//		return userDao.getUserNoByUserId(userId);
+//	}
 
 	//전체 유저 조회
 	@Override

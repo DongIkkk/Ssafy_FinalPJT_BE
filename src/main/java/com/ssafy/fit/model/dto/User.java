@@ -6,19 +6,21 @@ public class User {
 	private String userId;
 	private String password;
 	private String userName;
-	private String nickName;
 	private String email;
+	private String gender;
+	private int age;
 
 	public User() {
 	}
 
-	public User(int userNo, String userId, String password, String userName, String nickName, String email) {
+	public User(int userNo, String userId, String password, String userName, String email, String gender, int age) {
 		this.userNo = userNo;
 		this.userId = userId;
 		this.password = password;
 		this.userName = userName;
-		this.nickName = nickName;
 		this.email = email;
+		this.gender = gender;
+		this.age = age;
 	}
 
 	public int getUserNo() {
@@ -53,14 +55,6 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -69,10 +63,32 @@ public class User {
 		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", userName=" + userName
-				+ ", nickName=" + nickName + ", email=" + email + "]";
+	public String getGender() {
+		return gender;
 	}
 
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userNo=" + userNo +
+				", userId='" + userId + '\'' +
+				", password='" + password + '\'' +
+				", userName='" + userName + '\'' +
+				", email='" + email + '\'' +
+				", gender='" + gender + '\'' +
+				", age=" + age +
+				'}';
+	}
 }

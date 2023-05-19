@@ -15,9 +15,9 @@
 	</select>
 
 	<!--유저아이디로 유저 닉네임 조회-->
-	<select id="getNickNameByUserId" parameterType="String"	resultType="String">
-		SELECT nickName FROM user WHERE userId = #{userId}
-	</select>
+<!--	<select id="getNickNameByUserId" parameterType="String"	resultType="String">-->
+<!--		SELECT nickName FROM user WHERE userId = #{userId}-->
+<!--	</select>-->
 
 	<!--유저 추가-->
 	<insert id="insertUser" parameterType="User">
@@ -25,21 +25,21 @@
 	 VALUES (#{userId},	#{password}, #{nickName}, #{userName}, #{email})
 	</insert>
 
-	<!--찜리스트 추가-->
-	<insert id="likeVideo" parameterType="map">
-		INSERT INTO likelist (userId, videoNo) 
-		VALUES (#{userId}, #{videoNo})
-	</insert>
+<!--	&lt;!&ndash;찜리스트 추가&ndash;&gt;-->
+<!--	<insert id="likeVideo" parameterType="map">-->
+<!--		INSERT INTO likelist (userId, videoNo) -->
+<!--		VALUES (#{userId}, #{videoNo})-->
+<!--	</insert>-->
 
-	<!--찜리스트 삭제-->
-	<delete id="unLikeVideo" parameterType="map">
-		DELETE FROM likelist WHERE userId = #{userId} AND videoNo = #{videoNo}
-	</delete>
+<!--	&lt;!&ndash;찜리스트 삭제&ndash;&gt;-->
+<!--	<delete id="unLikeVideo" parameterType="map">-->
+<!--		DELETE FROM likelist WHERE userId = #{userId} AND videoNo = #{videoNo}-->
+<!--	</delete>-->
 
-	<!--비디오의 찜리스트 조회-->
-	<select id="selectLikeVideoNumbers" parameterType="String" resultType="Integer">
-	SELECT videoNo FROM likelist WHERE userId = #{userId}
-	</select>
+<!--	&lt;!&ndash;비디오의 찜리스트 조회&ndash;&gt;-->
+<!--	<select id="selectLikeVideoNumbers" parameterType="String" resultType="Integer">-->
+<!--	SELECT videoNo FROM likelist WHERE userId = #{userId}-->
+<!--	</select>-->
 
 	<!--팔로워 조회-->
 	<select id="myFollower" parameterType="int" resultType="Integer">
