@@ -26,22 +26,37 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	//로그인
 	@PostMapping("/tokenLogin")
-	public ResponseEntity<Map<String, Object>> tokenLogin(User user) {
+	public ResponseEntity<Map<String, Object>> tokenLogin(@RequestBody User user) {
 		Map<String, Object> result = new HashMap<>();
 		HttpStatus status = null;
-		try {
-			if (user.getUserId() != null || user.getUserId().length() > 0) {
-				result.put("access-token", jwtUtil.createToken("id", user.getUserId()));
-				result.put("message", "SUCCESS");
-				status = HttpStatus.ACCEPTED;
-			} else{
+
+		User targetUser = userService.selectUserByUserId(user.getUserId());
+
+		boolean correctPW = false;
+
+		if (targetUser.getPassword().equals(user.getPassword())) correctPW = true;
+
+		if (correctPW) {
+			try {
+				if (user.getUserId() != null || user.getUserId().length() > 0) {
+					result.put("access-token", jwtUtil.createToken("id", user.getUserId()));
+					result.put("message", "SUCCESS");
+					status = HttpStatus.ACCEPTED;
+				} else {
+					result.put("message", "FAIL");
+					status = HttpStatus.NO_CONTENT;
+				}
+			} catch (UnsupportedEncodingException e) {
 				result.put("message", "FAIL");
-				status = HttpStatus.NO_CONTENT;
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
-		} catch (UnsupportedEncodingException e) {
-			result.put("message", "FAIL");
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+		}
+		else{
+			result.put("message", "Your password is NOT CORRECT");
+			status = HttpStatus.BAD_REQUEST;
 		}
 		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
