@@ -31,8 +31,13 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> tokenLogin(@RequestBody User user) {
 		Map<String, Object> result = new HashMap<>();
 		HttpStatus status = null;
-
 		User targetUser = userService.selectUserByUserId(user.getUserId());
+
+		if(targetUser == null){
+			result.put("message", "Your ID is not exist");
+			status = HttpStatus.BAD_REQUEST;
+			return new ResponseEntity<Map<String, Object>>(result, status);
+		}
 
 		boolean correctPW = false;
 

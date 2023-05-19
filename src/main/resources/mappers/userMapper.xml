@@ -21,8 +21,8 @@
 
 	<!--유저 추가-->
 	<insert id="insertUser" parameterType="User">
-	INSERT INTO user (userId, password, nickName, userName, email)
-	 VALUES (#{userId},	#{password}, #{nickName}, #{userName}, #{email})
+	INSERT INTO user (userId, password, userName, email, gender, age)
+	 VALUES (#{userId},	#{password}, #{userName}, #{email}, #{gender}, #{age})
 	</insert>
 
 <!--	&lt;!&ndash;찜리스트 추가&ndash;&gt;-->
