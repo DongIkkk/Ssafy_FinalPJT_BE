@@ -40,11 +40,13 @@ public class JwtUtil {
         final String[] splitJwt = token.split("\\.");
         // payload decoding
         final String payloadStr = new String(decoder.decode(splitJwt[1].getBytes()));
+        // "{"id":"dongthu","exp":"waefhi"}"
         // decoding 된 문자열부분 JSON으로 변환
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(payloadStr);
 
         return (String)jsonObject.get("id");
+
     }
 
 

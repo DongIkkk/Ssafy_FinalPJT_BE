@@ -29,14 +29,14 @@
     
     <!-- 게시글 작성 -->
     <insert id="insertArticle" parameterType="Article">
-        INSERT INTO article (userNo, content, img, created_at, updated_at, likecnt, viewcnt)
-        VALUES (#{userNo}, #{content}, #{img}, now(), now(), 0, 0);
+        INSERT INTO article (userNo, content, imgfullpath, imgName, created_at, updated_at, likecnt, viewcnt)
+        VALUES (#{userNo}, #{content}, #{imgFullpath}, #{imgName}, now(), now(), 0, 0);
     </insert>
     
     <!-- 게시글 수정 -->
     <update id="updateArticle" parameterType="map">
         UPDATE article
-        SET content = #{content}, img = #{img}, updated_at = now()
+        SET content = #{content}, imgFullpath = #{imgFullpath}, imgName = #{imgName}, updated_at = now()
         WHERE reviewNo = #{reviewNo};
     </update>
     

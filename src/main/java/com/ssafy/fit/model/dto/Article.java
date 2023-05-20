@@ -5,7 +5,8 @@ public class Article {
     private int articleNo;
     private int userNo;
     private String content;
-    private String img;
+    private String imgFullpath;
+    private String imgName;
     private String created_at;
     private String updated_at;
     private int likeCnt;
@@ -35,12 +36,20 @@ public class Article {
         this.content = content;
     }
 
-    public String getImg() {
-        return img;
+    public String getImgFullpath() {
+        return imgFullpath;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgFullpath(String imgFullpath) {
+        this.imgFullpath = imgFullpath;
+    }
+
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
     }
 
     public String getCreated_at() {
