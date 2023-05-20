@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.ssafy.fit.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +63,16 @@ public class UserController {
 
 	// 사용자 리스트 조회
 	@GetMapping("/users")
-	public ResponseEntity<?> userList(){
+	public ResponseEntity<?> userList(@RequestHeader HttpHeaders header) throws Exception { // 헤더 가져오기
+
+		System.out.println(header.toSingleValueMap().toString());
+		System.out.println(header.get("access-token"));
+
+		String token = header.get("access-token").toString();
+		System.out.println(jwtUtil.getUserIdAtToken(token));
+
+		String requestUserId = jwtUtil.getUserIdAtToken(token);
+
 		List<User> ulist = userService.selectUserAll();
 
 		if(ulist==null || ulist.size()==0)
