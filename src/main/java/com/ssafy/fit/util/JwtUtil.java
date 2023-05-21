@@ -62,10 +62,10 @@ public class JwtUtil {
         final String payloadStr = new String(decoder.decode(splitJwt[1].getBytes()));
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(payloadStr);
+
 //        System.out.println(jsonObject.get("userNo").getClass().getName()); // json에서 꺼내온거 long
         return Integer.parseInt(String.valueOf(jsonObject.get("userNo")));
 
     }
-
 
 }
