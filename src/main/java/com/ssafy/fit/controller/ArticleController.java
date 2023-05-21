@@ -79,7 +79,7 @@ public class ArticleController {
 
     //게시글 수정
     @PutMapping("/article/{articleNo}")
-    public ResponseEntity<?> updateArticle(@RequestHeader HttpHeaders header, @PathVariable int articleNo, @RequestBody Article article, @RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<?> updateArticle(@RequestHeader HttpHeaders header, @PathVariable int articleNo, Article article, @RequestParam("file") MultipartFile file) throws Exception {
         String token = header.get("access-token").toString();
         int requestUserNo = jwtUtil.getUserNoAtToken(token);
 
@@ -94,6 +94,7 @@ public class ArticleController {
             String ranUUID = UUID.randomUUID().toString();
             String OriginFileName = "";
 
+            System.out.println("here");
             OriginFileName = file.getOriginalFilename();
             fullPath = fileDir + ranUUID + OriginFileName;
             file.transferTo(new File(fullPath));
@@ -124,7 +125,26 @@ public class ArticleController {
         return new ResponseEntity<String>("delete Complete!", HttpStatus.OK);
     }
 
-    //게시글 좋아요 취소 추가,,
+    // 게시글 좋아요
+    @PostMapping("/like/{articleNo}")
+    public ResponseEntity<?> articleLike(@RequestHeader HttpHeaders header, @PathVariable int articleNo) throws Exception {
+        String token = header.get("access-token").toString();
+        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+        articleService.articleLike(articleNo, requestUserNo);
+        return new ResponseEntity<>("like", HttpStatus.CREATED);
+    }
+
+    // 게시글 좋아요 취소
+    @DeleteMapping("like/{articleNo}")
+    public ResponseEntity<?> articleUnlike(@RequestHeader HttpHeaders header, @PathVariable int articleNo) throws Exception {
+        String token = header.get("access-token").toString();
+        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+        articleService.articleUnlike(articleNo, requestUserNo);
+        return new ResponseEntity<>("unlike", HttpStatus.OK);
+    }
+
 
 }
 

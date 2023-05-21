@@ -20,5 +20,9 @@ public interface ArticleService {
     public void updateArticle(int articleNo, Article article);
 
     public void increaseViewCnt(int articleNo);
+
+    public void articleLike(int articleNo, int userNo);
+
+    public void articleUnlike(int articleNo, int userNo);
     
 }

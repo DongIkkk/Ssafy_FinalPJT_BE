@@ -55,6 +55,15 @@ public class ArticleServiceImpl implements ArticleService{
         articleDao.increaseViewCnt(articleNo);
     }
 
+    @Override
+    public void articleLike(int articleNo, int userNo) {
+        articleDao.articleLike(articleNo, userNo);
+    }
 
-    
+    @Override
+    public void articleUnlike(int articleNo, int userNo) {
+        articleDao.articleUnlike(articleNo, userNo);
+    }
+
+
 }

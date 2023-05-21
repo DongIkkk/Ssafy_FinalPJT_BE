@@ -38,8 +38,8 @@
     <!-- 게시글 수정 -->
     <update id="updateArticle" parameterType="map">
         UPDATE article
-        SET content = #{content}, imgFullpath = #{imgFullpath}, imgName = #{imgName}, updated_at = now()
-        WHERE reviewNo = #{reviewNo};
+        SET content = #{article.content}, imgFullpath = #{article.imgFullpath}, imgName = #{article.imgName}, updated_at = now()
+        WHERE articleNo = #{articleNo};
     </update>
     
     <!-- 게시글 삭제 -->
