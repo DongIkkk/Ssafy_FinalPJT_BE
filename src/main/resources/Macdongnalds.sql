@@ -27,7 +27,8 @@ CREATE TABLE article (
     articleNo int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userNo int NOT NULL,
     content varchar(200) NOT NULL,
-    img varchar(100) NOT NULL,
+    imgFullpath varchar(300) NOT NULL,
+    imgName varchar(200) NOT NULL,
     created_at datetime default now(),
     updated_at datetime default now(),
     likecnt int default 0,
@@ -76,20 +77,20 @@ VALUES
 
 
 
-INSERT INTO article (userNo, content, img, created_at, updated_at, likecnt, viewcnt)
+INSERT INTO article (userNo, content, imgFullpath,imgName, created_at, updated_at, likecnt, viewcnt)
 VALUES
-(1, '첫번째 글입니다','/dog1.jpg', now(), now(), 0, 0),
-(1, '두번째 글입니다','/dog1.jpg', now(), now(), 0, 0),
-(1, '세번째 글입니다','/dog1.jpg', now(), now(), 0, 0),
-(2, '네번째 글입니다','/dog1.jpg', now(), now(), 0, 0),
-(2, '다섯번째 글입니다','/dog1.jpg', now(), now(), 0, 0),
-(3, '6번째 굴입니다','/dog1.jpg', now(), now(), 0, 0),
-(4, '7번째 내용입니다','/dog1.jpg', now(), now(), 0, 0),
-(5, '8번째 내용입니다','/dog1.jpg', now(), now(), 0, 0),
-(5, '9번째 굴입니다','/dog1.jpg', now(), now(), 0, 0),
-(6, '10번째 글입니다','/dog1.jpg', now(), now(), 0, 0),
-(6, '11번째 글입니다','/dog1.jpg', now(), now(), 0, 0),
-(7, '열두번째 글입니다','/dog2.jpg', now(), now(), 0, 0);
+(1, '첫번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog1.png','dog1.png', now(), now(), 0, 0),
+(1, '두번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog2.png','dog2.png', now(), now(), 0, 0),
+(1, '세번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog3.png','dog3.png', now(), now(), 0, 0),
+(2, '네번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog4.jpg','dog4.jpg', now(), now(), 0, 0),
+(2, '다섯번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog5.png','dog5.png', now(), now(), 0, 0),
+(3, '6번째 굴입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog6.jpeg','dog6.jpeg', now(), now(), 0, 0),
+(4, '7번째 내용입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog7.png','dog7.png', now(), now(), 0, 0),
+(5, '8번째 내용입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog1.png','dog1.png', now(), now(), 0, 0),
+(5, '9번째 굴입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog2.png','dog2.png', now(), now(), 0, 0),
+(6, '10번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog1.png','dog1.png', now(), now(), 0, 0),
+(6, '11번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog1.png','dog1.png', now(), now(), 0, 0),
+(7, '열두번째 글입니다','/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/dog1.png','dog1.png', now(), now(), 0, 0);
 
 
 INSERT INTO comment (articleNo, userNo, content, created_at, updated_at)
@@ -106,7 +107,7 @@ VALUES
 (11, 4, '두번째 제목', now(),now());
 
 INSERT INTO video (viewCount, title, part, youtubeUrl, channelName)
-VALUES 
+VALUES
 (12360152,  '전신 다이어트 최고의 운동 [칼소폭 찐 핵핵매운맛]', '전신', 'gMaB-fG4u4g', 'ThankyouBUBU'),
 (13915351, '하루 15분! 전신 칼로리 불태우는 다이어트 운동', '전신', 'swRNeYw1JkY', 'ThankyouBUBU'),
 (9758542, '상체 다이어트 최고의 운동 BEST [팔뚝살/겨드랑이살/등살/가슴어깨라인]', '상체', '54tTYO-vU2E', 'ThankyouBUBU'),
@@ -143,8 +144,3 @@ VALUES
 ('9', '5');
 
 commit;
-
--- 좋아요 수 데려오는 서브쿼리문 게시글조회
--- SELECT *,(SELECT count(*) FROM likeArticle WHERE articleNo = atc.articleNo) as likecnt
--- FROM article as atc
--- WHERE userNo = 1;
