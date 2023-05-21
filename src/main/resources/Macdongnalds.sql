@@ -18,6 +18,8 @@ CREATE TABLE user (
     userId varchar(40) NOT NULL,
     password varchar(40) NOT NULL,
     userName varchar(40) NOT NULL,
+	profileImgFullpath varchar(300) NOT NULL,
+    profileImgName varchar(200) NOT NULL,
     email varchar(100) NOT NULL,
     gender varchar(5) NOT NULL,
     age int NOT NULL

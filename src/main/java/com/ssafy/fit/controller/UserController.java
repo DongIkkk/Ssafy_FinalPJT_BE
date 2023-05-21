@@ -1,12 +1,15 @@
 package com.ssafy.fit.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.ssafy.fit.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.fit.model.dto.User;
 import com.ssafy.fit.model.service.UserService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,10 +31,26 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/profileImgs/")
+	private String profileImgDir;
+
 	// 회원가입
 	@PostMapping("/signup")
-	public ResponseEntity<?> signup(User user){
+	public ResponseEntity<?> signup(User user, @RequestParam("profileImg") MultipartFile profileImg)throws Exception {
 		if(userService.isDuplicate(user.getUserId())) {
+
+			String fullPath= "";
+			String ranUUID = UUID.randomUUID().toString();
+			String OriginProfileImgName = "";
+			if (profileImg!= null) {
+				OriginProfileImgName = profileImg.getOriginalFilename();
+				fullPath = profileImgDir + ranUUID + OriginProfileImgName; // 저장할 경로 만드는 코드
+				profileImg.transferTo(new File(fullPath)); // 진짜저장하는코드
+//				System.out.println(fullPath);
+			}
+			user.setProfileImgFullpath(fullPath);
+			user.setProfileImgName(ranUUID+OriginProfileImgName);
+
 			int result = userService.insertUser(user);
 			return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 		}
