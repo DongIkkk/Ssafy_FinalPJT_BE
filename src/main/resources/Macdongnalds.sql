@@ -18,8 +18,8 @@ CREATE TABLE user (
     userId varchar(40) NOT NULL,
     password varchar(40) NOT NULL,
     userName varchar(40) NOT NULL,
-	profileImgFullpath varchar(300) NOT NULL,
-    profileImgName varchar(200) NOT NULL,
+	profileImgFullpath varchar(300) DEFAULT '/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/profileImgs/profile_default_test.png',
+    profileImgName varchar(200) DEFAULT 'profile_default_test.png',
     email varchar(100) NOT NULL,
     gender varchar(5) NOT NULL,
     age int NOT NULL

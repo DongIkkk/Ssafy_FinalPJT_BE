@@ -36,7 +36,8 @@ public class UserController {
 
 	// 회원가입
 	@PostMapping("/signup")
-	public ResponseEntity<?> signup(User user, @RequestParam("profileImg") MultipartFile profileImg)throws Exception {
+	public ResponseEntity<?> signup(User user, @RequestParam(value = "profileImg", required = false)
+																MultipartFile profileImg)throws Exception {
 		if(userService.isDuplicate(user.getUserId())) {
 
 			String fullPath= "";
