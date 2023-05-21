@@ -2,8 +2,10 @@ package com.ssafy.fit.controller;
 
 import com.ssafy.fit.model.dto.Article;
 import com.ssafy.fit.model.service.ArticleService;
+import com.ssafy.fit.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,9 @@ import java.util.UUID;
 @RequestMapping("/api-article")
 @Api(tags = "게시글 컨트롤러")
 public class ArticleController {
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     private ArticleService articleService;
@@ -37,6 +42,7 @@ public class ArticleController {
     //게시글 상세 조회
     @GetMapping("/article/{articleNo}")
     public ResponseEntity<?> selectArticle(@PathVariable int articleNo){
+        articleService.increaseViewCnt(articleNo);
         Article thisAtc = articleService.selectArticleByNo(articleNo);
         return new ResponseEntity<Article>(thisAtc, HttpStatus.OK);
     }
@@ -45,42 +51,75 @@ public class ArticleController {
     //내가 쓴 게시글 조회
     @GetMapping("/articles/{userNo}")
     public ResponseEntity<?> selectMyArticles(@PathVariable int userNo){
-    	System.out.println("여기");
         List<Article> myAtcs = articleService.selectMyArticle(userNo);
-        System.out.println("여기2");
         return new ResponseEntity<List<Article>>(myAtcs, HttpStatus.OK);
     }
 
     //게시글 생성
     @PostMapping("/article")
-    public ResponseEntity<?> createArticle(Article article, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> createArticle(@RequestHeader HttpHeaders header, Article article, @RequestParam("file") MultipartFile file) throws Exception {
+        String token = header.get("access-token").toString();
+        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
         String fullPath= "";
         String ranUUID = UUID.randomUUID().toString();
         String OriginFileName = "";
-        if (!file.isEmpty()) {
+        if (file!= null) {
             OriginFileName = file.getOriginalFilename();
             fullPath = fileDir + ranUUID + OriginFileName; // 저장할 경로 만드는 코드
             file.transferTo(new File(fullPath)); // 진짜저장하는코드
             System.out.println(fullPath);
         }
-//        Article article = new Article(); // 입력받은 정보 article에 담기
-//        article.setContent(content);
         article.setImgFullpath(fullPath); //이미지에 경로를 저장
         article.setImgName(ranUUID+OriginFileName);
+        article.setUserNo(requestUserNo);
         articleService.insertArticle(article);
         return new ResponseEntity<String>("Insert Complete!", HttpStatus.CREATED);
     }
 
     //게시글 수정
     @PutMapping("/article/{articleNo}")
-    public ResponseEntity<?> updateArticle(@PathVariable int articleNo, @RequestBody Article article){
-        articleService.updateArticle(articleNo, article);
+    public ResponseEntity<?> updateArticle(@RequestHeader HttpHeaders header, @PathVariable int articleNo, @RequestBody Article article, @RequestParam("file") MultipartFile file) throws Exception {
+        String token = header.get("access-token").toString();
+        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+        Article thisArticle = articleService.selectArticleByNo(articleNo);
+
+        if(thisArticle.getUserNo() != requestUserNo){
+            return new ResponseEntity<String>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (file!= null) {
+            String fullPath= "";
+            String ranUUID = UUID.randomUUID().toString();
+            String OriginFileName = "";
+
+            OriginFileName = file.getOriginalFilename();
+            fullPath = fileDir + ranUUID + OriginFileName;
+            file.transferTo(new File(fullPath));
+
+            thisArticle.setImgName(ranUUID+OriginFileName);
+            thisArticle.setImgFullpath(fullPath);
+        }
+
+        thisArticle.setContent(article.getContent());
+
+        articleService.updateArticle(articleNo, thisArticle);
         return new ResponseEntity<String>("Update Complete!", HttpStatus.OK);
     }
 
     //게시글 삭제
     @DeleteMapping("/article/{articleNo}")
-    public ResponseEntity<?> deleteArticle(@PathVariable int articleNo){
+    public ResponseEntity<?> deleteArticle(@RequestHeader HttpHeaders header, @PathVariable int articleNo) throws Exception {
+        String token = header.get("access-token").toString();
+        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+        Article thisArticle = articleService.selectArticleByNo(articleNo);
+
+        if(thisArticle.getUserNo() != requestUserNo){
+            return new ResponseEntity<String>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+        }
+
         articleService.deleteArticle(articleNo);
         return new ResponseEntity<String>("delete Complete!", HttpStatus.OK);
     }

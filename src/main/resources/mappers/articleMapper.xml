@@ -9,6 +9,7 @@
         SELECT *,
         (select count(*) from likeArticle where articleNo = atc.articleNo) as likeCnt
          FROM article as atc
+        ORDER BY created_at DESC;
     </select>
 
     <!-- 나의 게시글 조회 -->
@@ -17,6 +18,7 @@
         	(select count(*) from likeArticle where articleNo = atc.articleNo) as likeCnt
          FROM article as atc
          WHERE userNo = #{userNo}
+        ORDER BY created_at DESC;
     </select>
 
     <!-- 게시글 상세 조회 -->
@@ -58,11 +60,11 @@
         VALUES(#{articleNo}, #{userNo})
     </insert>
     
-<!--     게시글 좋아요취소
-    <insert id="articleLike" parameterType="map">
-        INSERT INTO likeArticle (articleNo, userNo)
-        VALUES(#{articleNo}, #{userNo})
-    </insert> -->
+    <!-- 게시글 좋아요취소 -->
+    <delete id="articleUnlike" parameterType="map">
+        delete from likeArticle
+        where articleNo = #{articleNo} and userNo = #{userNo}
+    </delete>
     
     
     
