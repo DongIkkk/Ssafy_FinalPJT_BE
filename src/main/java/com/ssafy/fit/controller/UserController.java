@@ -135,7 +135,6 @@ public class UserController {
 
 		String token = header.get("access-token").toString();
 		int requestUserNo = jwtUtil.getUserNoAtToken(token);
-		System.out.println(requestUserNo);
 		List<Integer>[] flist = new List[2];
 
 		List<Integer> myFollower = userService.myFollower(requestUserNo);
