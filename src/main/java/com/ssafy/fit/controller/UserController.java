@@ -69,7 +69,7 @@ public class UserController {
 		if (correctPW) {
 			try {
 				// 토큰생성
-				result.put("access-token", jwtUtil.createToken("id", user.getUserId()));
+				result.put("access-token", jwtUtil.createToken("user", new Object[] {user.getUserId(), targetUser.getUserNo()}));
 				result.put("message", "SUCCESS");
 				status = HttpStatus.ACCEPTED;
 			} catch (UnsupportedEncodingException e) {
@@ -111,27 +111,35 @@ public class UserController {
 
 	// 팔로우
 	@PostMapping("/follow")
-	public ResponseEntity<?> follow(int from, int to){
-		userService.follow(from, to);
+	public ResponseEntity<?> follow(@RequestHeader HttpHeaders header, int to) throws Exception{
+		String token = header.get("access-token").toString();
+		int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+		userService.follow(requestUserNo, to);
 		return new ResponseEntity<String>("Following Complete",HttpStatus.CREATED);
 	}
 
 	// 언팔로우
 	@DeleteMapping("/follow")
-	public ResponseEntity<?> unfollow(int from, int to){
-		userService.unFollow(from, to);
+	public ResponseEntity<?> unfollow(@RequestHeader HttpHeaders header, int to) throws Exception{
+		String token = header.get("access-token").toString();
+		int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+		userService.unFollow(requestUserNo, to);
 		return new ResponseEntity<String>("Unfollow Complete", HttpStatus.OK);
 	}
 
 	// 팔로우 리스트 조회
 	@GetMapping("/follow")
-	public ResponseEntity<?> followlist(User user){
-		int userNo = user.getUserNo();
+	public ResponseEntity<?> followlist(@RequestHeader HttpHeaders header) throws Exception{
 
+		String token = header.get("access-token").toString();
+		int requestUserNo = jwtUtil.getUserNoAtToken(token);
+		System.out.println(requestUserNo);
 		List<Integer>[] flist = new List[2];
 
-		List<Integer> myFollower = userService.myFollower(userNo);
-		List<Integer> myFollowing = userService.myFollowing(userNo);
+		List<Integer> myFollower = userService.myFollower(requestUserNo);
+		List<Integer> myFollowing = userService.myFollowing(requestUserNo);
 
 		flist[0] = myFollower;
 		flist[1] = myFollowing;
