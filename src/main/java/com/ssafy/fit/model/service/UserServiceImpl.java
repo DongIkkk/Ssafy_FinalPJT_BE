@@ -102,5 +102,4 @@ public class UserServiceImpl implements UserService {
 	public void unFollow(int from, int to) {
 		userDao.unFollow(from, to);
 	}
-
 }

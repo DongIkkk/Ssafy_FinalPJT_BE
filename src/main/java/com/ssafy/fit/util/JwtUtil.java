@@ -63,7 +63,7 @@ public class JwtUtil {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(payloadStr);
 
-        return (int)jsonObject.get("userNo");
+        return (Integer)jsonObject.get("userNo");
 
     }
 
