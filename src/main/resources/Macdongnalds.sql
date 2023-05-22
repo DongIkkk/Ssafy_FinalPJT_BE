@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS video;
 DROP TABLE IF EXISTS follow;
 DROP TABLE IF EXISTS likeArticle;
+DROP TABLE IF EXISTS myRoutine;
 
 CREATE TABLE user (
     userNo int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -65,6 +66,16 @@ CREATE TABLE likeArticle (
     UserNo int NOT NUll
 )ENGINE=InnoDB;
 
+CREATE TABLE routine(
+    routineNo int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userNo int NOT NULL,
+	createdDate DATE DEFAULT (CURRENT_DATE),
+    routineType int NOT NULL,
+    dayOne varchar(80) NOT NULL,
+	dayTwo varchar(80) NOT NULL,
+	dayThree varchar(80) NOT NULL,
+	dayFour varchar(80)
+)ENGINE=InnoDB;
 
 INSERT INTO user (userId, password, userName, email, gender, age)
 VALUES
@@ -144,5 +155,17 @@ VALUES
 ('8', '1'),
 ('8', '3'),
 ('9', '5');
+
+
+INSERT INTO routine (userNo, createdDate, routineType, dayOne, dayTwo, dayThree, dayFour)
+VALUES
+(1, current_date(), 2, '등 어깨 가슴 삼두', '하체 전완근 이두', '휴식',''),
+(2, current_date(), 2, '등 어깨 이두', '가슴 삼두 하체', '휴식',''),
+(3, current_date(), 2, '가슴 삼두', '등 어깨 이두', '휴식',''),
+(4, current_date(), 3, '등 어깨 이두', '가슴 삼두', '하체', '휴식'),
+(5, current_date(), 3, '하체 이두', '가슴 삼두', '등 어깨', '휴식'),
+(6, current_date(), 3, '등 가슴', '하체','이두 삼두 전완근', '휴식');
+
+
 
 commit;
