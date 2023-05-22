@@ -17,7 +17,7 @@
 
     <!-- 루틴 삭제 -->
     <delete id="deleteRoutine" parameterType="int">
-        DELETE FROM routine WHERE routineNo = #{routineNo};
+        DELETE FROM routine WHERE userNo = #{userNo};
     </delete>
 
 </mapper>

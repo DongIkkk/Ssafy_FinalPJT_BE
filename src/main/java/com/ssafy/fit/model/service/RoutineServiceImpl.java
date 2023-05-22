@@ -2,11 +2,15 @@ package com.ssafy.fit.model.service;
 
 import com.ssafy.fit.model.dao.IRoutineDao;
 import com.ssafy.fit.model.dto.Routine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoutineServiceImpl implements RoutineService{
 
     private IRoutineDao routineDao;
 
+    @Autowired
     public RoutineServiceImpl(IRoutineDao routineDao){
         this.routineDao = routineDao;
     }
