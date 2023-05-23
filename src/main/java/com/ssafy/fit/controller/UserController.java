@@ -31,40 +31,38 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/profileImgs/")
+	@Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/profile_img/")
 	private String profileImgDir;
 
 	// 회원가입
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(User user, @RequestParam(value = "profileImg", required = false)
-																MultipartFile profileImg)throws Exception {
-		if(userService.isDuplicate(user.getUserId())) {
-
+																MultipartFile profileImg) throws Exception {
+		if (profileImg!= null) {
 			String fullPath= "";
 			String ranUUID = UUID.randomUUID().toString();
 			String OriginProfileImgName = "";
-			if (profileImg!= null) {
-				OriginProfileImgName = profileImg.getOriginalFilename();
-				fullPath = profileImgDir + ranUUID + OriginProfileImgName; // 저장할 경로 만드는 코드
-				profileImg.transferTo(new File(fullPath)); // 진짜저장하는코드
-//				System.out.println(fullPath);
-			}
+			OriginProfileImgName = profileImg.getOriginalFilename();
+			fullPath = profileImgDir + ranUUID + OriginProfileImgName; // 저장할 경로 만드는 코드
+			profileImg.transferTo(new File(fullPath)); // 진짜저장하는코드
 			user.setProfileImgFullpath(fullPath);
 			user.setProfileImgName(ranUUID+OriginProfileImgName);
-
-			int result = userService.insertUser(user);
-			return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
+		}else{
+			user.setProfileImgFullpath("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/profile_img/profile_default_test.png");
+			user.setProfileImgName("profile_default_test.png");
 		}
-		return new ResponseEntity<String>("ID Duplicate", HttpStatus.BAD_REQUEST);
+
+		int result = userService.insertUser(user);
+		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 
 	// 회원가입시 아이디 중복 체크
 	@PostMapping("/id-duplicate")
-	public ResponseEntity<?> idDuplicateCheck(String tryId){
+	public ResponseEntity<?> idDuplicateCheck(@RequestParam("tryId") String tryId){
 		if(userService.isDuplicate(tryId)) {
 			return new ResponseEntity<String>("You Can Make It", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("ID Duplicate", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>("ID Duplicate", HttpStatus.OK);
 	}
 
 	//로그인(jwt Token 발급)
