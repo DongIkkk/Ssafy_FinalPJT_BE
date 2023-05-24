@@ -119,6 +119,15 @@ public class UserController {
 		return new ResponseEntity<List<User>>(ulist, HttpStatus.OK);
 	}
 
+	// 나 조회
+	@GetMapping("/user")
+	public ResponseEntity<?> user(@RequestHeader HttpHeaders header) throws Exception {
+		String token = header.get("access-token").toString();
+		String requestUserId = jwtUtil.getUserIdAtToken(token);
+		User user = userService.selectUserByUserId(requestUserId);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+
 	// 로그아웃 기능
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session){

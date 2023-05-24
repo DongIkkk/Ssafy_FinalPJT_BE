@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 @RestController
 @RequestMapping("/api-routine")
 @Api(tags = "루틴 컨트롤러")
@@ -31,6 +34,47 @@ public class RoutineController {
         Routine myRoutine = routineService.selectRoutineByUserNo(requestUserNo);
         return new ResponseEntity<Routine>(myRoutine, HttpStatus.OK);
     }
+
+    @GetMapping("/today-routine")
+    public ResponseEntity<?> selectTodayRoutine(@RequestHeader HttpHeaders header) throws Exception {
+        String token = header.get("access-token").toString();
+        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+        Routine myRoutine = routineService.selectRoutineByUserNo(requestUserNo);
+        String result = "";
+        String[] datesplit = myRoutine.getCreatedDate().split("-");
+        LocalDate mydate = LocalDate.of(Integer.parseInt(datesplit[0]), Integer.parseInt(datesplit[1]), Integer.parseInt(datesplit[2]));
+        LocalDate currentDate = LocalDate.now();
+
+        long daysBetween = ChronoUnit.DAYS.between(mydate, currentDate);
+
+        if(myRoutine.getRoutineType() == 2){
+            long today = daysBetween % 3;
+            if(today == 0){
+                result += myRoutine.getDayOne();
+            }else if(today == 1){
+                result += myRoutine.getDayTwo();
+            }else if(today == 2){
+                result += myRoutine.getDayThree();
+            }
+        }
+
+        if(myRoutine.getRoutineType() == 3){
+            long today = daysBetween % 4;
+            if(today == 0){
+                result += myRoutine.getDayOne();
+            }else if(today == 1){
+                result += myRoutine.getDayTwo();
+            }else if(today == 2){
+                result += myRoutine.getDayThree();
+            }else if(today == 3){
+                result += myRoutine.getDayFour();
+            }
+        }
+
+        return new ResponseEntity<String>(result, HttpStatus.OK);
+    }
+
     //루틴 작성
     @PostMapping("/routine")
     public ResponseEntity<String> insertRoutine(Routine routine,@RequestHeader HttpHeaders header) throws Exception {

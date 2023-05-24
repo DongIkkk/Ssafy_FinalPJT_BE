@@ -29,7 +29,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     // 경로 이름길어서 fileDir로 쓰는듯
-    @Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE_test/imgs/")
+    @Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/")
     private String fileDir;
 
     //전체 게시글 조회
