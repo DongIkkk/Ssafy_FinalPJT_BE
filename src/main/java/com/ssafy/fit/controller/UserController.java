@@ -31,8 +31,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/profile_img/")
+	@Value("/Users/jeongdong-gyo/Desktop/FinalWorkspace/Ssafy_FinalPJT_FE/src/assets/profile_img/")
 	private String profileImgDir;
+
 
 	// 회원가입
 	@PostMapping("/signup")
@@ -48,7 +49,7 @@ public class UserController {
 			user.setProfileImgFullpath(fullPath);
 			user.setProfileImgName(ranUUID+OriginProfileImgName);
 		}else{
-			user.setProfileImgFullpath("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/profile_img/profile_default_test.png");
+			user.setProfileImgFullpath("/Users/jeongdong-gyo/Desktop/FinalWorkspace/Ssafy_FinalPJT_FE/src/assets/profile_img//profile_default_test.png");
 			user.setProfileImgName("profile_default_test.png");
 		}
 

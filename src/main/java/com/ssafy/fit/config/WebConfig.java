@@ -25,7 +25,11 @@ public class WebConfig implements WebMvcConfigurer {
 	//전역설정처럼 여기서 한방에 처리할 수도 있음.. 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("*");//.allowedMethods("GET", "POST");
+		registry.addMapping("/**")
+				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+				.allowedHeaders("*")
+//				.allowCredentials(true)
+				.allowedOrigins("*");//.allowedMethods("GET", "POST");
 	}
 
 	@Autowired
@@ -36,7 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
 				.addPathPatterns("/**")
 				.excludePathPatterns("/api-user/tokenLogin",
 						"/api-user/id-duplicate",
-						"/api-user/signup");
+						"/api-user/signup","/swagger-ui/index.html","/api-routine/routine");
 	}
 }
 	
