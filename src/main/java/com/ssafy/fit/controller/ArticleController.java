@@ -29,7 +29,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     // 경로 이름길어서 fileDir로 쓰는듯
-    @Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/")
+    @Value("/Users/jeongdong-gyo/Desktop/FinalWorkspace/Ssafy_FinalPJT_FE/src/assets/")
     private String fileDir;
 
     //전체 게시글 조회
@@ -79,14 +79,14 @@ public class ArticleController {
 
     //게시글 수정
     @PutMapping("/article/{articleNo}")
-    public ResponseEntity<?> updateArticle(@RequestHeader HttpHeaders header, @PathVariable int articleNo, Article article, @RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<?> updateArticle(@RequestHeader HttpHeaders header, @PathVariable int articleNo,Article article, @RequestParam("file") MultipartFile file) throws Exception {
         String token = header.get("access-token").toString();
         int requestUserNo = jwtUtil.getUserNoAtToken(token);
 
         Article thisArticle = articleService.selectArticleByNo(articleNo);
 
         if(thisArticle.getUserNo() != requestUserNo){
-            return new ResponseEntity<String>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<String>("UNAUTHORIZED", HttpStatus.OK);
         }
 
         if (file!= null) {
