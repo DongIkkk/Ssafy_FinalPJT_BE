@@ -2,7 +2,9 @@ package com.ssafy.fit.controller;
 
 import com.ssafy.fit.model.dto.Comment;
 import com.ssafy.fit.model.dto.Routine;
+import com.ssafy.fit.model.dto.User;
 import com.ssafy.fit.model.service.RoutineService;
+import com.ssafy.fit.model.service.UserService;
 import com.ssafy.fit.util.JwtUtil;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class RoutineController {
 
     @Autowired
     private RoutineService routineService;
+
+    @Autowired
+    private UserService userService;
 
     //루틴 조회
     @GetMapping("/routine")
@@ -77,11 +82,11 @@ public class RoutineController {
 
     //루틴 작성
     @PostMapping("/routine")
-    public ResponseEntity<String> insertRoutine(Routine routine,@RequestHeader HttpHeaders header) throws Exception {
-        String token = header.get("access-token").toString();
-        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+    public ResponseEntity<String> insertRoutine(Routine routine, @RequestParam("myId") String requestId) throws Exception {
 
-        routine.setUserNo(requestUserNo);
+        User requestUser = userService.selectUserByUserId(requestId);
+
+        routine.setUserNo(requestUser.getUserNo());
 
         routineService.insertRoutine(routine);
         return new ResponseEntity<String>("Insert Complete!", HttpStatus.CREATED);
