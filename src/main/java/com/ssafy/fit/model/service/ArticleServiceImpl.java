@@ -65,5 +65,10 @@ public class ArticleServiceImpl implements ArticleService{
         articleDao.articleUnlike(articleNo, userNo);
     }
 
+    @Override
+    public List<Integer> selectLikesByUserNo(int userNo) {
+        return articleDao.selectLikesByUserNo(userNo);
+    }
+
 
 }

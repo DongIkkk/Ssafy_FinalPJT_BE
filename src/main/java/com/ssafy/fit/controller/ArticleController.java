@@ -136,7 +136,7 @@ public class ArticleController {
     }
 
     // 게시글 좋아요 취소
-    @DeleteMapping("like/{articleNo}")
+    @DeleteMapping("/like/{articleNo}")
     public ResponseEntity<?> articleUnlike(@RequestHeader HttpHeaders header, @PathVariable int articleNo) throws Exception {
         String token = header.get("access-token").toString();
         int requestUserNo = jwtUtil.getUserNoAtToken(token);
@@ -145,6 +145,15 @@ public class ArticleController {
         return new ResponseEntity<>("unlike", HttpStatus.OK);
     }
 
+    //유저의 게시글 좋아요 조회
+    @GetMapping("/like/articles")
+    public ResponseEntity<?> selectLikesByUserNo(@RequestHeader HttpHeaders header) throws Exception{
+        String token = header.get("access-token").toString();
+        int requestUserNo = jwtUtil.getUserNoAtToken(token);
+
+        List<Integer> likesByUser = articleService.selectLikesByUserNo(requestUserNo);
+        return new ResponseEntity<List<Integer>>(likesByUser, HttpStatus.OK);
+    }
 
 }
 

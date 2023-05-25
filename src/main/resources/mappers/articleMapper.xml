@@ -66,8 +66,11 @@
         where articleNo = #{articleNo} and userNo = #{userNo}
     </delete>
     
-    
-    
-    
+    <!--유저가 좋아요한 게시글 찾기 -->
+    <select id="selectLikesByUserNo" parameterType="int" resultType="int">
+        SELECT ArticleNo
+        FROM likeArticle
+        WHERE UserNo = #{userNo};
+    </select>
 
 </mapper>
