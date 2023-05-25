@@ -31,7 +31,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@Value("/Users/jeongdong-gyo/Desktop/FinalWorkspace/Ssafy_FinalPJT_FE/src/assets/profile_img/")
+	@Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/profile_img/")
 	private String profileImgDir;
 
 
@@ -49,7 +49,7 @@ public class UserController {
 			user.setProfileImgFullpath(fullPath);
 			user.setProfileImgName(ranUUID+OriginProfileImgName);
 		}else{
-			user.setProfileImgFullpath("/Users/jeongdong-gyo/Desktop/FinalWorkspace/Ssafy_FinalPJT_FE/src/assets/profile_img//profile_default_test.png");
+			user.setProfileImgFullpath("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/profile_img/profile_default_test.png");
 			user.setProfileImgName("profile_default_test.png");
 		}
 
@@ -140,21 +140,23 @@ public class UserController {
 
 	// 팔로우
 	@PostMapping("/follow")
-	public ResponseEntity<?> follow(@RequestHeader HttpHeaders header, int to) throws Exception{
+	public ResponseEntity<?> follow(@RequestHeader HttpHeaders header, @RequestBody String to) throws Exception{
+		int toUser = Integer.parseInt(to);
 		String token = header.get("access-token").toString();
 		int requestUserNo = jwtUtil.getUserNoAtToken(token);
 
-		userService.follow(requestUserNo, to);
+		userService.follow(requestUserNo, toUser);
 		return new ResponseEntity<String>("Following Complete",HttpStatus.CREATED);
 	}
 
 	// 언팔로우
 	@DeleteMapping("/follow")
-	public ResponseEntity<?> unfollow(@RequestHeader HttpHeaders header, int to) throws Exception{
+	public ResponseEntity<?> unfollow(@RequestHeader HttpHeaders header, @RequestBody String to) throws Exception{
+		int toUser = Integer.parseInt(to);
 		String token = header.get("access-token").toString();
 		int requestUserNo = jwtUtil.getUserNoAtToken(token);
 
-		userService.unFollow(requestUserNo, to);
+		userService.unFollow(requestUserNo, toUser);
 		return new ResponseEntity<String>("Unfollow Complete", HttpStatus.OK);
 	}
 

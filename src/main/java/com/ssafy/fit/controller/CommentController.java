@@ -70,7 +70,7 @@ public class CommentController {
 
     // 댓글 수정
     @PutMapping("/comment/{commentNo}")
-    public ResponseEntity<String> updateComment(@PathVariable int commentNo, Comment comment, @RequestHeader HttpHeaders header) throws Exception{
+    public ResponseEntity<String> updateComment(@PathVariable int commentNo, @RequestBody Comment comment, @RequestHeader HttpHeaders header) throws Exception{
         String token = header.get("access-token").toString();
         int requestUserNo = jwtUtil.getUserNoAtToken(token);
 
