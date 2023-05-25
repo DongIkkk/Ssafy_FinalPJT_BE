@@ -24,5 +24,7 @@ public interface ArticleService {
     public void articleLike(int articleNo, int userNo);
 
     public void articleUnlike(int articleNo, int userNo);
+
+    public List<Integer> selectLikesByUserNo(int userNo);
     
 }

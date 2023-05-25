@@ -24,4 +24,6 @@ public interface IArticleDao {
 
     public void articleUnlike(int articleNo, int userNo);
 
+    public List<Integer> selectLikesByUserNo(int userNo);
+
 }
