@@ -40,7 +40,7 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/{articleNo}/comment")
-    public ResponseEntity<String> insertComment(@PathVariable int articleNo, Comment comment, @RequestHeader HttpHeaders header) throws Exception{
+    public ResponseEntity<String> insertComment(@PathVariable int articleNo, @RequestBody Comment comment, @RequestHeader HttpHeaders header) throws Exception{
         String token = header.get("access-token").toString();
         int requestUserNo = jwtUtil.getUserNoAtToken(token);
 

@@ -2,6 +2,7 @@ package com.ssafy.fit.controller;
 
 import com.ssafy.fit.model.dto.Article;
 import com.ssafy.fit.model.service.ArticleService;
+import com.ssafy.fit.model.service.GrassService;
 import com.ssafy.fit.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private GrassService grassService;
 
     // 경로 이름길어서 fileDir로 쓰는듯
     @Value("/Users/dongik/Desktop/Coding/ssafy_project/macdongnald/ssafit_spring_dong_FE/macdongnaldsfront/src/assets/")
@@ -73,6 +77,9 @@ public class ArticleController {
         article.setImgFullpath(fullPath); //이미지에 경로를 저장
         article.setImgName(ranUUID+OriginFileName);
         article.setUserNo(requestUserNo);
+
+        grassService.insertGrass(requestUserNo);
+
         articleService.insertArticle(article);
         return new ResponseEntity<String>("Insert Complete!", HttpStatus.CREATED);
     }

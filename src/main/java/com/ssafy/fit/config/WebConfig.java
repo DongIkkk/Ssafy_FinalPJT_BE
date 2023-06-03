@@ -40,7 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
 				.addPathPatterns("/**")
 				.excludePathPatterns("/api-user/tokenLogin",
 						"/api-user/id-duplicate",
-						"/api-user/signup","/swagger-ui/index.html","/api-routine/routine","/api-article/articles");
+						"/api-user/signup","/api-user/users","/swagger-ui/index.html","/api-routine/routine","/api-article/articles");
 	}
 }
 	
